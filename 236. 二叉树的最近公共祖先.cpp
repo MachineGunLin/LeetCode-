@@ -22,6 +22,12 @@
 所有节点的值都是唯一的。
 p、q 为不同节点且均存在于给定的二叉树中。
 
+## 思路
+如果二叉树为空，则返回空，如果两个节点其中一个已经是root，则返回这个节点。
+然后递归左右子树，因为是递归，所以可以认为左右子树已经计算出结果，分别用left和right表示。
+如果left为空，就要看right的状态，反之亦然。
+如果left和right都非空，由于只有p和q两个节点，说明p和q分别在左右子树一边一个，所以root是最近公共祖先，返回root。
+如果left和right都为空，则返回空。
 `/**
  * Definition for a binary tree node.
  * struct TreeNode {
