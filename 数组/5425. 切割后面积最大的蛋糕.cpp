@@ -25,3 +25,26 @@ public:
         return fmod(horizontalMaxLength * verticalMaxLength, 1e9 + 7);
     }
 };
+
+
+/*
+简洁版：简化了变量命名，并且返回值是int类型。
+*/
+class Solution {
+public:
+    int maxArea(int h, int w, vector<int>& hc, vector<int>& vc) {
+        //直接把0，h压入hc数组中，同理把0，w压入vc数组
+        hc.push_back(0), hc.push_back(h);
+        vc.push_back(0), vc.push_back(w);
+        sort(hc.begin(), hc.end());
+        sort(vc.begin(), vc.end());
+        int x = 0, y = 0;
+        for(int i = 1; i < hc.size(); ++i) {
+            x = max(x, hc[i] - hc[i - 1]);      //遍历结束后x就是水平的边之间的最大距离
+        }
+        for(int i = 1; i < vc.size(); ++i) {
+            y = max(y, vc[i] - vc[i - 1]);      //遍历结束后y就是垂直的边之间的最大距离
+        }
+        return (long long) x * y % 1000000007;  //注意这里 x * y不能加括号变成 (x * y)，会爆int
+    }
+};
