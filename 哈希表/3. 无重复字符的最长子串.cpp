@@ -15,8 +15,8 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
         unordered_set<char> hashTable;
-        int startIndex, endIndex = -1, maxLength = 0;
-        for(startIndex = 0; startIndex < s.size(); startIndex++) {
+        int startIndex = 0, endIndex = -1, maxLength = 0;
+        for(; startIndex < s.size(); ++startIndex) {
             if(startIndex != 0) {
                 hashTable.erase(s[startIndex - 1]);
             }
@@ -24,8 +24,7 @@ public:
                 hashTable.insert(s[endIndex + 1]);
                 endIndex++;
             }
-            int currentLength = endIndex + 1 - startIndex;
-            maxLength = max(maxLength, currentLength);
+            maxLength = max(maxLength, endIndex + 1 -startIndex);
         }
         return maxLength;
     }
