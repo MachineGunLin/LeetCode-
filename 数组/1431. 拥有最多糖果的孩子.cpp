@@ -12,8 +12,8 @@ public:
         for(auto candy : candies) {
             mostCandies = max(mostCandies, candy);
         }
-        for(int i = 0; i < candies.size(); i++) {
-            if(candies[i] + extraCandies >= mostCandies) {
+        for(auto candy : candies) {
+            if(candy + extraCandies >= mostCandies) {
                 res.push_back(true);
             } else {
                 res.push_back(false);
