@@ -25,6 +25,7 @@ public:
     
     string forward(int steps) {
         current = min((int)records.size() - 1, current + steps);    //前进操作至多前进到records[records.size() - 1]，再往前就前进不了了
+        //注意min()函数要求参数是相同的类型，size()函数的返回值是size_t类型，所以需要强制类型转换为int类型
         return records[current];
     }
 };
