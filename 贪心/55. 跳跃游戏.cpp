@@ -10,16 +10,16 @@
 
 class Solution {
 public:
-    int maxSubArray(vector<int>& nums) {
-        int res = nums[0], sum = 0;
-        for(auto num : nums) {
-            if(sum >= 0) {
-                sum += num;
-            } else {
-                sum = num;
+    bool canJump(vector<int>& nums) {
+        int canReach = 0;
+        for(int i = 0; i < nums.size(); ++i) {
+            if(i <= canReach) {
+                canReach = max(canReach, i + nums[i]);
+                if(canReach >= nums.size() - 1) {
+                    return true;
+                }
             }
-            res = max(res, sum);
         }
-        return res;
+        return false;
     }
 };
