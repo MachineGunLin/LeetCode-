@@ -1,0 +1,43 @@
+/*
+这题和62题类似，只不过这里多了障碍物，只需要把有障碍物的格子的方案数设置为0即可，其他格子还是原来的走法。
+*/
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int rows = obstacleGrid.size(), cols = obstacleGrid[0].size();           //获取总行数和列数
+        vector<vector<int>> dp(rows, vector<int>(cols));      //dp[i][j]表示到第i行第j列的方案数
+        if(obstacleGrid[0][0] == 1) {                      //如果起点就有障碍物，那么到其他所有格子的方案数都是0
+            return 0;
+        } else {
+            dp[0][0] = 1;
+        }
+        //到第0列和第0行的格子的方案数都是1（因为只有向下或向右这种走法）
+        for(int i = 1; i < rows; ++i) {                  
+            if(obstacleGrid[i][0] == 0) {
+                dp[i][0] = 1;
+            } else {
+                dp[i][0] = 0;            //如果第0列某个格子存在障碍物
+                break;                   //那么这个格子下面的格子都是不可达的
+            }
+        }
+        for(int i = 1; i < cols; ++i) {
+            if(obstacleGrid[0][i] == 0) {
+                dp[0][i] = 1;
+            } else {
+                dp[0][i] = 0;
+                break;
+            }
+        }
+        for(int i = 1; i < rows; ++i) {
+            for(int j = 1; j < cols; ++j) {
+                if(obstacleGrid[i][j] == 1) {
+                    dp[i][j] = 0;      
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                }
+            }
+        }
+        return dp[rows - 1][cols - 1];            //返回到右下角的格子的方案数
+    }      
+};
