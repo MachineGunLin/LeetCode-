@@ -1,3 +1,9 @@
+/*
+因为是二叉搜索树，所以中序遍历可以得到一个升序序列。
+
+因此可以中序遍历这个二叉搜索树，把结果存在一个数组中，然后遍历这个数组，计算相邻值的最小值，这个最小值就是答案。
+*/
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -9,23 +15,25 @@
  */
 class Solution {
 public:
-    int res = int(1e9);
-    vector<int> nodeNum;
-    void inOrderTraversal(TreeNode* root) {
-        if(root == NULL) return ;
-        inOrderTraversal(root -> left);
-        nodeNum.push_back(root -> val);
-        inOrderTraversal(root -> right);
+    vector<int> nodes;
+
+    void inOrder(TreeNode* root) {
+        if(root == NULL) {
+            return ;
+        }
+        inOrder(root -> left);
+        nodes.push_back(root -> val);
+        inOrder(root -> right);
     }
+
     int getMinimumDifference(TreeNode* root) {
-        inOrderTraversal(root);
-        for(vector<int>::iterator it = nodeNum.begin(); it != nodeNum.end(); it++) {
-            if(it == nodeNum.end() - 1) continue;
-            else {
-                if(*(it + 1) - *it < res) {
-                    res = *(it + 1) - *it;
-                }
-            }
+        if(root == NULL) {
+            return 0;
+        }
+        inOrder(root);
+        int res = INT_MAX;
+        for(int i = 0; i < nodes.size() - 1; ++i) {
+            res = min(res, nodes[i + 1] - nodes[i]);
         }
         return res;
     }
